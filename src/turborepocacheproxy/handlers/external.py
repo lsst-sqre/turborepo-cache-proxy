@@ -1,4 +1,4 @@
-"""Handlers for the app's external root, ``/turborepo-cache-proxy/``."""
+"""Handlers for the app's external root, ``/turborepo-cache/``."""
 
 from typing import Annotated
 

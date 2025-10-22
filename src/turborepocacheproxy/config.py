@@ -27,7 +27,7 @@ class Config(BaseSettings):
     name: str = Field("turborepo-cache-proxy", title="Name of application")
 
     path_prefix: str = Field(
-        "/turborepo-cache-proxy", title="URL prefix for application"
+        "/turborepo-cache", title="URL prefix for application"
     )
 
     slack_webhook: SecretStr | None = Field(

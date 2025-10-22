@@ -1,7 +1,7 @@
 """Internal HTTP handlers that serve relative to the root path, ``/``.
 
 These handlers aren't externally visible since the app is available at a path,
-``/turborepo-cache-proxy``. See `turborepocacheproxy.handlers.external` for
+``/turborepo-cache``. See `turborepocacheproxy.handlers.external` for
 the external endpoint handlers.
 
 These handlers should be used for monitoring, health checks, internal status,

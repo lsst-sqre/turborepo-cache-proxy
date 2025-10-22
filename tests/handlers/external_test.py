@@ -10,8 +10,8 @@ from turborepocacheproxy.config import config
 
 @pytest.mark.asyncio
 async def test_get_index(client: AsyncClient) -> None:
-    """Test ``GET /turborepo-cache-proxy/``."""
-    response = await client.get("/turborepo-cache-proxy/")
+    """Test ``GET /turborepo-cache/``."""
+    response = await client.get("/turborepo-cache/")
     assert response.status_code == 200
     data = response.json()
     metadata = data["metadata"]
