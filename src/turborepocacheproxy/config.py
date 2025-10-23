@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from pydantic import Field, SecretStr
+from pydantic import AnyHttpUrl, Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from safir.logging import LogLevel, Profile
 
@@ -27,13 +27,28 @@ class Config(BaseSettings):
     name: str = Field("turborepo-cache-proxy", title="Name of application")
 
     path_prefix: str = Field(
-        "/turborepo-cache-proxy", title="URL prefix for application"
+        "/turborepo-cache", title="URL prefix for application"
     )
 
     slack_webhook: SecretStr | None = Field(
         None,
         title="Slack webhook for alerts",
         description="If set, alerts will be posted to this Slack webhook",
+    )
+
+    cache_url: AnyHttpUrl = Field(
+        AnyHttpUrl("http://cache"),
+        title="Turborepo cache URL",
+        description="Base URL for the Turborepo cache",
+    )
+
+    cache_token: SecretStr = Field(
+        ...,
+        title="Turborepo cache authentication token",
+        description=(
+            "Static auth token for the Turborepo cache, passed as a Bearer "
+            "token"
+        ),
     )
 
 

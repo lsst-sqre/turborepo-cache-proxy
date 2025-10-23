@@ -28,7 +28,6 @@ dependencies = [
 dynamic = ["version"]
 
 [project.urls]
-Homepage = "https://turborepo-cache-proxy.lsst.io"
 Source = "https://github.com/lsst-sqre/turborepo-cache-proxy"
 
 [build-system]

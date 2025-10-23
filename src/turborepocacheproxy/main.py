@@ -19,6 +19,7 @@ from safir.middleware.x_forwarded import XForwardedMiddleware
 from safir.slack.webhook import SlackRouteErrorHandler
 
 from .config import config
+from .dependencies.proxyclient import proxy_client
 from .handlers.external import external_router
 from .handlers.internal import internal_router
 
@@ -34,6 +35,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
 
     # Any code here will be run when the application shuts down.
     await http_client_dependency.aclose()
+    await proxy_client.aclose()
 
 
 configure_logging(
