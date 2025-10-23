@@ -218,6 +218,40 @@ async def test_path_prefix_stripping(client: AsyncClient) -> None:
 
 
 @pytest.mark.asyncio
+async def test_double_slash_normalization(client: AsyncClient) -> None:
+    """Test that double slashes after prefix are normalized.
+
+    This handles cases where TURBO_API ends with a trailing slash
+    and the client appends a path starting with a slash, resulting
+    in URLs like /turborepo-cache//v8/artifacts/... instead of
+    /turborepo-cache/v8/artifacts/...
+    """
+    async with respx.mock:
+        # Mock backend - should receive normalized path with single slash
+        route = respx.route(
+            method="GET",
+            url__regex=rf".*{ARTIFACT_ID}.*teamId={TEAM_ID}",
+        ).mock(return_value=Response(200, content=ARTIFACT_DATA))
+
+        # Client requests with double slash after prefix
+        # (simulating TURBO_API misconfiguration)
+        response = await client.get(
+            f"/turborepo-cache//v8/artifacts/{ARTIFACT_ID}",
+            params={"teamId": TEAM_ID},
+        )
+
+        # Verify response succeeded
+        assert response.status_code == 200
+
+        # Verify backend received normalized path (single slash)
+        assert route.called
+        backend_request = route.calls[0].request
+        assert backend_request.url.path == f"/v8/artifacts/{ARTIFACT_ID}"
+        # Ensure NO double slashes in the backend path
+        assert "//" not in backend_request.url.path
+
+
+@pytest.mark.asyncio
 async def test_query_parameter_variations(client: AsyncClient) -> None:
     """Test that query parameters (team, teamId, slug) are preserved."""
     test_cases = [

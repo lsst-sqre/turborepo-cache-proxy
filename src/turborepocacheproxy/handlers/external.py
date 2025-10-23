@@ -71,6 +71,9 @@ async def handle_proxy_request(
     try:
         # Strip proxy path prefix
         backend_path = request.url.path.removeprefix(config.path_prefix)
+        # Normalize double slashes after prefix
+        # (e.g., //v8/artifacts -> /v8/artifacts)
+        backend_path = "/" + backend_path.lstrip("/")
 
         url = httpx.URL(path=backend_path, query=request.url.query.encode())
 
