@@ -7,6 +7,13 @@ Find changes for the upcoming release in the project's [changelog.d directory](h
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-1.0.1'></a>
+## 1.0.1 (2026-06-12)
+
+### Other changes
+
+- Update the Docker base image to Python 3.14.
+
 <a id='changelog-1.0.0'></a>
 ## 1.0.0 (2025-10-23)
 
