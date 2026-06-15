@@ -49,10 +49,10 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 FROM base-image AS runtime-image
 
 # Create a non-root user.
-RUN useradd --create-home appuser
+RUN useradd --create-home --uid 1000 appuser
 
-# Copy the virtualenv.
-COPY --from=install-image /app/.venv /app/.venv
+# Copy the virtualenv, owned by the runtime (non-root) user.
+COPY --chown=appuser:appuser --from=install-image /app/.venv /app/.venv
 
 # Switch to the non-root user.
 USER appuser
