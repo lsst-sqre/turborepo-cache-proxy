@@ -104,7 +104,7 @@ Test fixtures in `tests/conftest.py`:
 
 ## Code Style
 
-- Python 3.13 required
+- Python 3.14 required
 - Strict type checking enabled (mypy with strict settings)
 - Import sorting via Ruff (isort rules)
 - Shared Ruff configuration in `ruff-shared.toml`
