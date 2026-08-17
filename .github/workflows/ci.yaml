@@ -18,6 +18,7 @@ env:
       - "dependabot/**"
       - "gh-readonly-queue/**"
       - "renovate/**"
+      - "t/**"
       - "tickets/**"
       - "u/**"
   release:
@@ -45,8 +46,21 @@ jobs:
         run: uv run --only-group=tox tox run -e lint,typing,py,coverage-report
 
   build:
+    concurrency:
+      group: docker
+      queue: max
     needs: [test]
+    if: >
+      (github.event_name == 'release' && github.event.action == 'published')
+      || (github.event_name != 'merge_group'
+          && (startsWith(github.head_ref, 'tickets/')
+              || startsWith(github.head_ref, 't/')
+              || startsWith(github.head_ref, 'dependabot/')))
     uses: lsst-sqre/multiplatform-build-and-push/.github/workflows/build.yaml@v4
     with:
       images: ghcr.io/${{ github.repository }}
+      push: >-
+        ${{ (github.event_name == 'release' && github.event.action == 'published')
+            || startsWith(github.head_ref, 'tickets/')
+            || startsWith(github.head_ref, 't/') }}
     secrets: inherit
