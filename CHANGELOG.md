@@ -7,6 +7,13 @@ Find changes for the upcoming release in the project's [changelog.d directory](h
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-1.0.6'></a>
+## 1.0.6 (2026-11-19)
+
+### Other changes
+
+- Update pinned dependencies and pre-commit hooks, including FastAPI 0.165.0, Starlette 1.10.0, Pydantic 2.14.4, Safir 15.2.3, Uvicorn 0.54.0, and uv 0.13.9. FastAPI now depends on `opentelemetry-api`, which is locked at 1.45.2.
+
 <a id='changelog-1.0.5'></a>
 ## 1.0.5 (2026-10-21)
 
